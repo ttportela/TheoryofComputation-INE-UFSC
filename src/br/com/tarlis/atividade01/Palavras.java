@@ -28,7 +28,7 @@ public class Palavras {
 			n1 = Integer.parseInt(input.split(" ")[0]);
 			n2 = Integer.parseInt(input.split(" ")[1]);
 			
-			// Input of words
+			// Input of words 
 			List<String> words1 = new ArrayList<String>();
 			for (int i = 0; i < n1; i++) {
 				words1.add(scn.nextLine().trim());
