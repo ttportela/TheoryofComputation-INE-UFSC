@@ -1,7 +1,7 @@
 /**
  * Words 
  */
-package br.com.tarlis.atividade01;
+package br.com.tarlis.atividade01.v2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +31,8 @@ public class Main {
 		int n1, n2;
 		String input;
 		
+		long startTime = System.nanoTime();
+		
 		while (in.ready() && (input = in.readLine()) != null) {
 			
 			// Input size groups:
@@ -48,11 +50,13 @@ public class Main {
 			}
 
 			found = false;
-//			concat("","",0);
 			match();
 			
 			System.out.println(found? "S" : "N");
 		}
+		
+		long endTime   = System.nanoTime();
+		System.out.println("Total Time: " + ((endTime - startTime)/1000));
 		
 		return;
 	}
@@ -84,38 +88,8 @@ public class Main {
 	}
 
 	static boolean found = false;
-	static int MAX_IT = 5;
+	static int MAX_IT = 7;
 	static List<String> L1; 
 	static List<String> L2;
-	
-	private static void concat(String wl1, String wl2, int size) {
-		if (found || size >= MAX_IT) return;
-		for (String w : L1) {
-//			System.out.println("X:"+wl1.concat(w));
-			if ((wl1 + w).equals(wl2)) { 
-				found = true; return; 
-			} else {
-//				System.out.print(".");
-				concat((wl1 + w), wl2, size+1);
-//				for (String u : L2) {
-////					concat(wl1, wl2 + u, size+1);
-//					concat((wl1+w), (wl2+u), size+1);
-//				}
-			}	
-		}
-			
-		for (String w : L2) {
-//			System.out.println("Y:"+wl2.concat(w));
-			if ((wl2 + w).equals(wl1)) { 
-				found = true; return; 
-			} else {
-//				System.out.print(",");
-				concat(wl1, (wl2 + w), size+1);
-//				for (String u : L1) {
-//					concat((wl1 + u), (wl2 + w), size+1);
-//				}
-			}
-		}
-	}
 
 }
