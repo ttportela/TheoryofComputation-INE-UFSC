@@ -97,7 +97,9 @@ public class Main {
 	}
 
 	/**
-	 * 
+	 * Imita um AFN  de máquinas equivalentes. Compara as concatenações possíveis de L1 e L2
+	 * para cada caractere como entradas em um AFN até que a entrada acabe e seja um estado de 
+	 * aceitação para ambas as máquinas.
 	 * 
 	 * @param w Palavra de entrada - L1. Máquina 1 (M1)
 	 * @param u Palavra de entrada - L2. Máquina 2 (M2)
