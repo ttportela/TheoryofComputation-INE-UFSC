@@ -120,14 +120,16 @@ public class Main {
 	 * @param it Quantidade Máxima de iterações
 	 */
 	private static void concat2(String w, String R, int it) {
+		// Limita o a quantidade de iterações:
 		if (found || it >= MAX_IT || w.length() > MAX_SIZE) return;
 		
+		// Para cada combinação de palavras possível, verifica se a concatenação dá match com R:
 		for (String u : L2) {
 			if ((w + u).matches(R)) {
-				found = true; 
+				found = true; // Encontrou um match, para de iterar
 				return; 
 			} else 
-				concat2((w + u),R,it+1);	
+				concat2((w + u),R,it+1); // Continua concatenando recursivamente.
 		}
 	}
 
