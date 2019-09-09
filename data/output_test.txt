@@ -1,6 +1,12 @@
-^(010|11)+$
-S
-^(1|00|000)+$
-N
-^(00)+$
-S
+A+B*c/1/1||
+B*c/3/1||
+ABc*+
+(A+B)*c/2/2||
+(A/5/5||
+Exception in thread "main" java.lang.StringIndexOutOfBoundsException: String index out of range: 5
+	at java.lang.String.charAt(String.java:658)
+	at br.com.tarlis.atividade02.Parser.<init>(Main.java:122)
+	at br.com.tarlis.atividade02.Parser.<init>(Main.java:129)
+	at br.com.tarlis.atividade02.Parser.parse(Main.java:165)
+	at br.com.tarlis.atividade02.Main.lexsim(Main.java:86)
+	at br.com.tarlis.atividade02.Main.main(Main.java:66)
