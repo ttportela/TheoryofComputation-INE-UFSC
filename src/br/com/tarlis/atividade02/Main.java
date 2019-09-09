@@ -57,10 +57,13 @@ public class Main {
 		String input;
 		
 		// Contador de Tempo (Comentado)
-		long startTime = System.nanoTime();
+//		long startTime = System.nanoTime();
+
 		
+//		int ct = 1;
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
+//			System.out.print(ct++ + " - ");
 			
 			// Impressão do resultado:
 			lexsim(input);
@@ -68,8 +71,8 @@ public class Main {
 		}
 		
 		// Contador de Tempo (Comentado)
-		long endTime   = System.nanoTime();
-		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+//		long endTime   = System.nanoTime();
+//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
@@ -83,11 +86,13 @@ public class Main {
 	 */
 	private static void lexsim(String input) {
 		try {			
+//			System.out.println(input+"==");
 			Parser expr = Parser.parse(input);
 			System.out.println(expr.postOrder());
+//			System.out.println("==============================");
 		} catch (ParseException e) {
 			System.out.println(e.getMessage());
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 	}
 
@@ -108,44 +113,77 @@ class Parser {
 	protected Parser right = null;
 	protected Parser left = null;
 	
-	private Parser(String expression, List<Marker> markers, int increment) {
-		if (expression.length() == 1) {
-			root = expression.charAt(0);
+	private Parser(String expression, int increment, List<Marker> markers) {
+		String s = expression.replaceAll("[()]", "");
+
+		if (expression.length() <= 0) 
+			throw ParseException.SYN_ERROR;
+//		System.out.println(expression + " => " + expression.length());
+		
+		if (s.length() == 1) {
+			root = s.charAt(0);
+//			System.out.println(root + "[X]");
 			return;
 		} else if (!markers.isEmpty()) {
 			// Tira do topo (como uma Pilha)
-			Marker m = getMarker(markers, increment);
+			Marker m = markers.get(0); //getMarker(markers, increment);
 			markers.remove(0);
 			
-			int pos = m.pos-increment;
-			System.out.println(expression + "/" + m.pos +"/"+ pos +"||");
-			root = expression.charAt(pos);
+//			int pos = m.pos-increment;
+//			try {
+			root = expression.charAt(m.pos);
+//			} catch (Exception e) {
+//				System.out.print("=>" + m.pos +"/"+ increment +"||");
+//			}
+//			System.out.print(root + "[Y]");
+//			System.out.println(expression + "/" + m.pos +"/"+ increment +"||");
 			
-			String s;
-			if (pos <= 0) 
+			if (m.pos <= 0) 
 				throw ParseException.SYN_ERROR;
 			else { 
-				s = trimMarks(expression.substring(0, pos));
-				left = new Parser( s, markers, 0 );
+				Object[] aux = trimExp(expression.substring(0, m.pos));
+				s = (String) aux[0];
+//				System.out.println(s + "[L]");
+				left = new Parser( s, 0,
+					updateMarkers(markers, m.pos, true));
 			}
 			
-			if (pos+1 >= expression.length())
+			if (m.pos+1 >= expression.length())
 				throw ParseException.SYN_ERROR;
 			else {
-				s = trimMarks(expression.substring(pos+1));
-				right = new Parser( s, markers, pos+1 );
+				Object[] aux = trimExp(expression.substring(m.pos+1));
+				s = (String) aux[0];
+//				System.out.println(s + "[R]");
+				int pos = m.pos+1 - (int)aux[1]; // Posição atualizada
+				right = new Parser( s, m.pos,
+					updateMarkers(markers, pos, false));
 			}
-		}
+		} else
+			throw ParseException.SYN_ERROR;
 		
 	}
 	
-	private Marker getMarker(List<Marker> markers, int pos) {
-		for (Marker m : markers) {
-			if (m.pos > pos) {
-				return m;
+//	private Marker getMarker(List<Marker> markers, int pos) {
+//		for (Marker m : markers) {
+//			if (m.pos > pos) {
+//				return m;
+//			}
+//		}
+//		return null;
+//	}
+	
+	private List<Marker> updateMarkers(List<Marker> markers, int pos, boolean left) {
+		List<Marker> ls = new ArrayList<Marker>();
+		// Atualiza markers
+		if (markers != null) {
+			for (Marker m : markers) {
+				if ((left && m.pos < pos) || (!left && m.pos > pos)) {
+					m.pos = left? m.pos : m.pos - pos;
+					ls.add(m);
+				}
 			}
 		}
-		return null;
+		return ls;
 	}
 
 	public static Parser parse(String expression) {
@@ -154,38 +192,40 @@ class Parser {
 			throw ParseException.LEX_ERROR;
 
 		// Tratamento dos parênteses:
-		if (expression.contains(")")) {
-			// Remove agrupamentos das bordas
-			expression = trimMarks(expression);
-		}
+//		if (expression.contains(")")) {
+//			// Remove agrupamentos das bordas
+//			expression = (String) trimExp(expression)[0];
+//		}
 		
 		// Procura pelos operadores, por ordem de precedência menor-maior, da esqerda para direita. 
 		List<Marker> markers = splitPoints(expression.toCharArray());
 		
-		return new Parser(expression, markers, 0);
+//		for (Marker m : markers) {
+//			System.out.print(m.pos + ", ");
+//		}
+		
+		return new Parser(expression, 0, markers);
 		
 	}
 	
 	private static List<Marker> splitPoints(char[] expression) {
-		int pos = -1, priority = 10, parLevel = 0;
+		int parLevel = 0;
 		List<Marker> markers = new ArrayList<Marker>();
 		// Para cada caracter procura o operador de menor precedência:
-		FOUND:
 		for (int i = 0; i < expression.length; i++) {
 			char c = expression[i];
-			for (int k = 0; k < OPERATORS.length; k++) {
-				char op = OPERATORS[k];
-				if (op == c) {
-					markers.add(new Marker(i, parLevel, PRIORITY[k]));
-					priority = PRIORITY[k];
-					pos = i;
-//					if (priority == 1) break FOUND;
-				} else if (c == '(') {
-					parLevel++;
-				} else if (c == ')') {
-					parLevel--;
+			if (c == '(') {
+				parLevel++;
+			} else if (c == ')') {
+				parLevel--;
+			} else 
+				for (int k = 0; k < OPERATORS.length; k++) {
+					char op = OPERATORS[k];
+					if (op == c) {
+						markers.add(new Marker(i, parLevel, PRIORITY[k]));
+						break;
+					}
 				}
-			}
 		}
 		
 		// se falta parênteses, erro:
@@ -196,36 +236,34 @@ class Parser {
 		Collections.sort(markers, new Comparator<Marker>() {
 			@Override
 			public int compare(Marker o1, Marker o2) {
-				if (o1.parLevel <= o2.parLevel)
-					if (o1.priority < o2.priority)
-						return -1;
-					else 
-						return 1;
+				if (o1.parLevel == o2.parLevel)
+					return o1.priority - o2.priority;
 				else
-					return 1;
+					return o1.parLevel - o2.parLevel;
 			}
 		});
 		
 		return markers;
 	}
 	
-	private static String trimMarks(String sb) {
-	    while (sb.length() > 2 && (sb.charAt(0) == '(' && sb.charAt(sb.length()-1) == ')')) {
-	        sb = sb.substring(1,sb.length()-1);
-	    }
-	    return sb;
+	private static Object[] trimExp(String sb) {
+		int cont = 0;
+	    // Remove parênteses do início e fim
+//		while (sb.length() > 2 && (sb.charAt(0) == '(' && sb.charAt(sb.length()-1) == ')')) {
+//	        sb = sb.substring(1,sb.length()-1);
+//	        cont++;
+//	    }
+		
+	    return new Object[] { sb, cont };
 	}
 	
 	public String postOrder() {
 		String s = "";
 		s += left != null? left.postOrder() : "";
 		s += right != null? right.postOrder() : "";
-		return s + getRoot();
+		return s + root;
 	}
 	
-	public String getRoot() {
-		return root == '('? "" : String.valueOf(root);
-	}
 }
 
 class Marker {
