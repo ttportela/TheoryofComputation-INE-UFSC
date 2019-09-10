@@ -59,11 +59,8 @@ public class Main {
 		// Contador de Tempo (Comentado)
 //		long startTime = System.nanoTime();
 
-		
-//		int ct = 1;
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
-//			System.out.print(ct++ + " - ");
 			
 			// Impressão do resultado:
 			lexsim(input);
@@ -85,140 +82,165 @@ public class Main {
 	 * @param it Número da iteração;
 	 */
 	private static void lexsim(String input) {
-		try {			
-//			System.out.println(input+"==");
+		try {
 			Parser expr = Parser.parse(input);
 			System.out.println(expr.postOrder());
-//			System.out.println("==============================");
-		} catch (ParseException e) {
+		} 
+		// Tratamento de erros do Parser
+		catch (ParseException e) {
 			System.out.println(e.getMessage());
-//			e.printStackTrace();
 		}
 	}
 
-	// Variáveis globais auxiliares:
-//	static int MAX_IT = 10; // Limite de iterações recursivas
-
 }
 
+/**
+ * Classe Parser - Transforma a expressão em uma árvore binária de operações.
+ * 
+ * */
 class Parser {
 	
+	// Operadores
 	protected static final char[] OPERATORS = new char[] {
 			'|', '.', '#', '=', '<', '>', '-', '+', '/', '*', '^' };
 	
+	// Ordem de precedência (respectivamente em OPERATORS)
 	protected static final int[] PRIORITY = new int[] {
-			1,	  2,   3, 	3, 	 3,   3,   4,   4,   5,   5,   6 };
+			1,	  2,   3, 	3, 	 3,   3,   4,   4,   5,   5,   6  };
 	
+	// Estruturas da árvore binária
 	protected char root;
 	protected Parser right = null;
 	protected Parser left = null;
 	
+	/**
+	 *  Método construtor funciona recursivamente criando novas instâncias de classe
+	 *  dividindo a expressão.
+	 *  
+	 */
 	private Parser(String expression, int increment, List<Marker> markers) {
+		// Testa para saber se a expressão está mal formatada (com parênteses)
 		String s = expression.replaceAll("[()]", "");
-
 		if (expression.length() <= 0) 
-			throw ParseException.SYN_ERROR;
-//		System.out.println(expression + " => " + expression.length());
+			throw ParseException.SYN_ERROR();
 		
-		if (s.length() == 1) {
+		if (s.length() == 1) { 
+			// Caso 1: se removendo os parênteses 
+			// resta apenas um caractere, ele se torna raiz.
 			root = s.charAt(0);
-//			System.out.println(root + "[X]");
 			return;
 		} else if (!markers.isEmpty()) {
-			// Tira do topo (como uma Pilha)
-			Marker m = markers.get(0); //getMarker(markers, increment);
+			// Caso 2: a expressão contém vários caracteres e, 
+			// portanto, outros operadores. Então,
+			// Tira um operador do topo (como uma Pilha)
+			Marker m = markers.get(0);
 			markers.remove(0);
 			
-//			int pos = m.pos-increment;
-//			try {
+			// O caractere da posição marcada é um operador
+			// Logo, ele se torna raíz
 			root = expression.charAt(m.pos);
-//			} catch (Exception e) {
-//				System.out.print("=>" + m.pos +"/"+ increment +"||");
-//			}
-//			System.out.print(root + "[Y]");
-//			System.out.println(expression + "/" + m.pos +"/"+ increment +"||");
-			
-			if (m.pos <= 0) 
-				throw ParseException.SYN_ERROR;
-			else { 
-				Object[] aux = trimExp(expression.substring(0, m.pos));
-				s = (String) aux[0];
-//				System.out.println(s + "[L]");
-				left = new Parser( s, 0,
+			// Então dividimos a expressão em duas partes:
+			// Esquerda - caracteres antes da posição
+			// Direita  - caracteres depois da posição
+
+			// Monta a sub árvore esquerda:
+			if (m.pos <= 0) // Garantir que a expressão à esquerda exite
+				throw ParseException.SYN_ERROR();
+			else {
+				// Chama recursivamente uma nova sub árvore com a parte
+				// Esquerda, e a pilha apenas dos marcadores da parte esquerda 
+				left = new Parser( expression.substring(0, m.pos), 0,
 					updateMarkers(markers, m.pos, true));
 			}
 			
-			if (m.pos+1 >= expression.length())
-				throw ParseException.SYN_ERROR;
+			// Monta a sub árvore direita:
+			if (m.pos+1 >= expression.length()) // Garantir que a expressão à direita exite
+				throw ParseException.SYN_ERROR();
 			else {
-				Object[] aux = trimExp(expression.substring(m.pos+1));
-				s = (String) aux[0];
-//				System.out.println(s + "[R]");
-				int pos = m.pos+1 - (int)aux[1]; // Posição atualizada
-				right = new Parser( s, m.pos,
-					updateMarkers(markers, pos, false));
+				// Chama recursivamente uma nova sub árvore com a parte
+				// Direita, e a pilha apenas dos marcadores da parte direita
+				// (como a String é "cortada", atualizamos os índices dos marcadores)
+				right = new Parser( expression.substring(m.pos+1), m.pos,
+					updateMarkers(markers, m.pos+1, false));
 			}
-		} else
-			throw ParseException.SYN_ERROR;
+		} else // Qualquer outro caso é erro Sintático.
+			throw ParseException.SYN_ERROR();
 		
 	}
 	
-//	private Marker getMarker(List<Marker> markers, int pos) {
-//		for (Marker m : markers) {
-//			if (m.pos > pos) {
-//				return m;
-//			}
-//		}
-//		return null;
-//	}
-	
+	/**
+	 * Este método separa divide a pilha de marcadores em duas, na primeira chamada
+	 * left == true e este monta a pilha com os marcadores à esquerda da expressão e, quando
+	 * left == false e este monta a pilha com os marcadores à direita da expressão.
+	 */
 	private List<Marker> updateMarkers(List<Marker> markers, int pos, boolean left) {
 		List<Marker> ls = new ArrayList<Marker>();
 		// Atualiza markers
 		if (markers != null) {
 			for (Marker m : markers) {
 				if ((left && m.pos < pos) || (!left && m.pos > pos)) {
-					m.pos = left? m.pos : m.pos - pos;
+					// Atualiza as posições quando monta a pilha da esquerda
+					m.pos = left? m.pos : m.pos - pos; 
 					ls.add(m);
 				}
 			}
 		}
 		return ls;
 	}
+	
+	/** 
+	 * Impressão é Pós-Ordem
+	 */
+	public String postOrder() {
+		String s = "";
+		s += left != null? left.postOrder() : "";
+		s += right != null? right.postOrder() : "";
+		return s + root;
+	}
 
+	/** 
+	 * Método auxiliar, para a conversão da String em árvore
+	 * (não faz parte das instâncias)
+	 */ 
 	public static Parser parse(String expression) {
 		// Testa por erro léxico:
 		if (!expression.matches("([A-Za-z0-9()\\^*/+-><=#.|])*")) 
-			throw ParseException.LEX_ERROR;
+			throw ParseException.LEX_ERROR();
 
-		// Tratamento dos parênteses:
-//		if (expression.contains(")")) {
-//			// Remove agrupamentos das bordas
-//			expression = (String) trimExp(expression)[0];
-//		}
-		
 		// Procura pelos operadores, por ordem de precedência menor-maior, da esqerda para direita. 
 		List<Marker> markers = splitPoints(expression.toCharArray());
 		
-//		for (Marker m : markers) {
-//			System.out.print(m.pos + ", ");
-//		}
-		
-		return new Parser(expression, 0, markers);
+		try {
+			return new Parser(expression, 0, markers);
+		} catch (Exception e) {
+			// Qualquer outro erro gerado é possivelmente causado por má formção
+			throw ParseException.SYN_ERROR();
+		}
 		
 	}
 	
+	
+	/**
+	 * Este método cria a pilha de prioridades dos operadores.
+	 * A implementação é de uma lista, pois fazemos ordenação.
+	 * 
+	 * @param expression Expressão matemática
+	 * @return Lista das posições dos marcadores na String.
+	 */
 	private static List<Marker> splitPoints(char[] expression) {
+		// Variável que indica se entrou em algum parênteses
 		int parLevel = 0;
+		// Lista a ser preenchida com os marcadores das posições dos operadores
 		List<Marker> markers = new ArrayList<Marker>();
-		// Para cada caracter procura o operador de menor precedência:
-		for (int i = 0; i < expression.length; i++) {
+		// Percorremos a String da direita para a esquerda
+		// Para cada caractere procura o operador de menor precedência:
+		for (int i = expression.length-1; i >= 0; i--) {
 			char c = expression[i];
-			if (c == '(') {
+			if (c == ')') { // Quando entra em um parênteses, sobre um nível
 				parLevel++;
-			} else if (c == ')') {
+			} else if (c == '(') {// Quando sai de um parênteses, desce um nível
 				parLevel--;
-			} else 
+			} else // Vê se o caractere é um operador e adiciona um marcador à lista
 				for (int k = 0; k < OPERATORS.length; k++) {
 					char op = OPERATORS[k];
 					if (op == c) {
@@ -228,9 +250,9 @@ class Parser {
 				}
 		}
 		
-		// se falta parênteses, erro:
+		// Se faltou algum parênteses, erro:
 		if (parLevel != 0) 
-			throw ParseException.SYN_ERROR;
+			throw ParseException.SYN_ERROR();
 		
 		// Ordena pela menor prioridade, considerando o nível dos parênteses
 		Collections.sort(markers, new Comparator<Marker>() {
@@ -246,43 +268,37 @@ class Parser {
 		return markers;
 	}
 	
-	private static Object[] trimExp(String sb) {
-		int cont = 0;
-	    // Remove parênteses do início e fim
-//		while (sb.length() > 2 && (sb.charAt(0) == '(' && sb.charAt(sb.length()-1) == ')')) {
-//	        sb = sb.substring(1,sb.length()-1);
-//	        cont++;
-//	    }
-		
-	    return new Object[] { sb, cont };
-	}
-	
-	public String postOrder() {
-		String s = "";
-		s += left != null? left.postOrder() : "";
-		s += right != null? right.postOrder() : "";
-		return s + root;
-	}
-	
 }
 
+/**
+ * Classe que representa o marcador
+ * 
+ */
 class Marker {
 	public Marker(int pos, int parLevel, int priority) {
-		this.pos = pos;
-		this.parLevel = parLevel;
-		this.priority = priority;
+		this.pos = pos; 
+		this.parLevel = parLevel; 
+		this.priority = priority; 
 	}
-	public int pos = 0;
-	public int parLevel = 0;
-	public int priority = 10;
+	public int pos 		= 0;  // Posição do caratere na String
+	public int parLevel = 0;  // Nível do parênteses que o operador está
+	public int priority = 10; // Prioridade do operador
 }
 
+/**
+ * Classe de Erros do Parser
+ */
 class ParseException extends RuntimeException {
-	
-	public static final ParseException LEX_ERROR = new ParseException("Lexical Error!");
-	public static final ParseException SYN_ERROR = new ParseException("Syntax Error!");
 	
 	public ParseException(String msg) {
 		super(msg);
+	}
+	
+	public static ParseException LEX_ERROR() {
+		return new ParseException("Lexical Error!");
+	}
+	
+	public static ParseException SYN_ERROR() {
+		return new ParseException("Syntax Error!");
 	}
 }

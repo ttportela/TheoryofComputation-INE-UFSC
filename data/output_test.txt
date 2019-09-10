@@ -1,4 +1,547 @@
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
+Syntax Error!
+Syntax Error!
+AB+c*
+Lexical Error!
+abc*+2/e*a+
+abc*+2/ea+*
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Lexical Error!
+ab+c-
+abc*d/-e+
 ab+
-abcdef2^=====
-ab+cd/#e4-122bc/x-+a^1*=><.
-abcde<=>=424^+yx2+y3f/-==.522xy#^^22ab.^^^#||
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+ab+
+ab+cd+/
+ab+
+ab+
+ab^
+12.c^
+Syntax Error!
+ab=c=d=e=f2^=
+Syntax Error!
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+
+Syntax Error!
+Syntax Error!
+Syntax Error!
+ab+cd/#e4-1<2>2bc/+x-a^1*=.
+ab=c>d=e<424^+yx2+y3f/-==.|522xy#^^22ab.^^^#|
+Total Time: 0.398478274
