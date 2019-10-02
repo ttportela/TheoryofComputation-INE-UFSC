@@ -21,6 +21,7 @@
 package br.com.tarlis.trabalho01;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -45,32 +46,57 @@ public class Main {
 	 * @throws NumberFormatException Erro na entrada de N1 ou N2.
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-
+		
+		byte[] buffer = new byte[System.in.available()+1];
+		System.in.read(buffer);
+		buffer[buffer.length-1] = '\n';
+		
 		// Ferramentas de leitura da entrada:
-		InputStreamReader ir = new InputStreamReader(System.in);
+		InputStreamReader ir = new InputStreamReader(new ByteArrayInputStream(buffer));
         BufferedReader in = new BufferedReader(ir);
 		
         // Variáveis úteis:
 		String input;
 		
 		// Contador de Tempo (Comentado)
-		long startTime = System.nanoTime();
+//		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
-			int[] VAR = split(input); // n, m, d, k (1 ≤ n ≤ 500, 1 ≤ m ≤ 1.000.000, 0 ≤ d < n/2, 1 ≤ k ≤ 10.000.000)
+			// n, m, d, k (1 ≤ n ≤ 500, 1 ≤ m ≤ 1.000.000, 0 ≤ d < n/2, 1 ≤ k ≤ 10.000.000)
+			int[] VAR = split(input); 
 			int[] cells = split(in.readLine());
 			
 			// Impressão do resultado:
-			cells = automata(VAR[0], VAR[1], VAR[2], VAR[3], cells);
+			cells = automata2(VAR[0], VAR[1], VAR[2], VAR[3], cells);
 			print(cells);
 		}
 		
 		// Contador de Tempo (Comentado)
-		long endTime   = System.nanoTime();
-		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+//		long endTime   = System.nanoTime();
+//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
+	}
+
+	private static int[] automata2(int n, int m, int d, int k, int[] cells) {
+		for (int i = 0; i < k; i++) {
+			int[] aux = new int[n];
+			int sum = sum1(0, d, n, cells);
+			aux[0] = sum % m;
+			for (int j = 1; j < n; j++) {
+				sum -= cell(j-1-d, n, cells);
+				sum += cell(j+d, n, cells);
+				aux[j] = sum % m;
+			}
+			cells = aux;
+		}
+		return cells;
+	}
+
+	private static int cell(int j, int n, int[] cells) {
+		int k = j < 0? n + j : (j >= n? j-n : j);
+		return cells[k];
 	}
 
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
@@ -87,10 +113,11 @@ public class Main {
 	private static int sum1(int i, int d, int n, int[] cells) {
 		int sum = 0;
 		for (int j = i-d; j <= i+d; j++) {
-			int k = j < 0? n + j : (j >= n? j-n : j);
-			if (distance(i,k,n) <= d) {
-				sum += cells[k];
-			}
+//			int k = j < 0? n + j : (j >= n? j-n : j);
+//			if (distance(i,k,n) <= d) {
+//				sum += cells[k];
+//			}
+			sum += cell(j, n, cells);
 		}
 		return sum;
 	}
@@ -113,10 +140,11 @@ public class Main {
 	}
 
 	private static void print(int[] cells) {
+		String s = "";
 		for (int i : cells) {
-			System.out.print(i + " ");
+			s += i + " ";
 		}
-		System.out.println();
+		System.out.println(s.trim());
 	}
 
 	private static int[] split(String input) {
