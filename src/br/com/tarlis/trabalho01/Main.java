@@ -21,7 +21,6 @@
 package br.com.tarlis.trabalho01;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -60,7 +59,7 @@ public class Main {
 		String input;
 		
 		// Contador de Tempo (Comentado)
-		long startTime = System.nanoTime();
+//		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
@@ -71,34 +70,40 @@ public class Main {
 			// Impressão do resultado:
 			cells = automata2(VAR[0], VAR[1], VAR[2], VAR[3], cells);
 			print(cells);
-//			System.out.println("--");
+//			System.out.println("-- n="+VAR[0]+", m="+VAR[1]+", d="+VAR[2]+", k="+VAR[3]+" -- ");
+//			System.out.println("------------------------------------------------ ");
 		}
 		
 		// Contador de Tempo (Comentado)
-		long endTime   = System.nanoTime();
-		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+//		long endTime   = System.nanoTime();
+//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
 
+	private static int[] automata3(int n, int m, int d, int k, int[] cells) {
+
+		int cicle = -1;
+		
+		int[] aux = newState(n, m, d, cells);
+		for (int i = 1; i < k; i++) {
+			aux = newState(n, m, d, aux);
+			
+			if (Arrays.equals(cells, aux)) 
+				return automata2(n,m,d,(k % i)-1, cells);			
+			
+		}
+		return aux;
+	}
+	
 	private static int[] automata2(int n, int m, int d, int k, int[] cells) {
-		if (k > m)
-			do {
-				k = k / (m+1);
-			} while (k > 10);
+//		if (k > m)
+//		while ((k % n) == 0) {
+//			k = k / n;
+//		} 
 		
 		for (int i = 0; i < k; i++) {
-			int[] aux = new int[n];
-			int sum = sum1(0, d, n, cells);
-			aux[0] = sum % m;
-			for (int j = 1; j < n; j++) {
-				sum -= cell(j-1-d, n, cells);
-				sum += cell(j+d, n, cells);
-				aux[j] = sum % m;
-			}
-//			System.out.print(i + " - ");
-//			print(cells);
-			cells = aux;
+			cells = newState(n, m, d, cells);
 		}
 		return cells;
 	}
@@ -109,6 +114,11 @@ public class Main {
 	}
 
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
+//		if (k > m)
+//		do {
+//			k = k / (m+1);
+//		} while (k > 10);
+		
 		for (int i = 0; i < k; i++) {
 			int[] aux = new int[n];
 			for (int j = 0; j < n; j++) {
@@ -118,30 +128,42 @@ public class Main {
 		}
 		return cells;
 	}
+
+	private static int[] newState(int n, int m, int d, int[] cells) {
+		int[] aux = new int[n];
+		int sum = sum1(0, d, n, cells);
+		aux[0] = sum % m;
+		for (int j = 1; j < n; j++) {
+			sum -= cell(j-1-d, n, cells);
+			sum += cell(j+d, n, cells);
+			aux[j] = sum % m;
+		}
+		return aux;
+	}
 	
 	private static int sum1(int i, int d, int n, int[] cells) {
 		int sum = 0;
 		for (int j = i-d; j <= i+d; j++) {
-//			int k = j < 0? n + j : (j >= n? j-n : j);
-//			if (distance(i,k,n) <= d) {
-//				sum += cells[k];
-//			}
-			sum += cell(j, n, cells);
+			int k = j < 0? n + j : (j >= n? j-n : j);
+			if (distance(i,k,n) <= d) {
+				sum += cells[k];
+			}
+//			sum += cell(j, n, cells);
 		}
 		return sum;
 	}
 
-//	private static int sum(int i, int j, int d, int n, int[] cells) {
-//		if (j == -1) j = n-1;
-//		if (j == n)  j = 0;
-//		if (distance(i,j,n) <= d) {
-//			int sum = cells[j];
-//			sum += sum(i, j-1,d, n, cells);
-//			sum += sum(i, j+1,d, n, cells);
-//			return sum;
-//		} else 
-//			return 0;
-//	}
+	private static int sum(int i, int j, int d, int n, int[] cells) {
+		if (j == -1) j = n-1;
+		if (j == n)  j = 0;
+		if (distance(i,j,n) <= d) {
+			int sum = cells[j];
+			sum += sum(i, j-1,d, n, cells);
+			sum += sum(i, j+1,d, n, cells);
+			return sum;
+		} else 
+			return 0;
+	}
 
 	private static int distance(int i, int j, int n) {
 		//  min(|i − j|, n − |i − j|) >> distance
