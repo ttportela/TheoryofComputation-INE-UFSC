@@ -47,19 +47,20 @@ public class Main {
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		
-		byte[] buffer = new byte[System.in.available()+1];
-		System.in.read(buffer);
-		buffer[buffer.length-1] = '\n';
+//		byte[] buffer = new byte[System.in.available()+1];
+//		System.in.read(buffer);
+//		buffer[buffer.length-1] = '\n';
 		
 		// Ferramentas de leitura da entrada:
-		InputStreamReader ir = new InputStreamReader(new ByteArrayInputStream(buffer));
+//		InputStreamReader ir = new InputStreamReader(new ByteArrayInputStream(buffer));
+		InputStreamReader ir = new InputStreamReader(System.in);
         BufferedReader in = new BufferedReader(ir);
 		
         // Variáveis úteis:
 		String input;
 		
 		// Contador de Tempo (Comentado)
-//		long startTime = System.nanoTime();
+		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
@@ -70,16 +71,22 @@ public class Main {
 			// Impressão do resultado:
 			cells = automata2(VAR[0], VAR[1], VAR[2], VAR[3], cells);
 			print(cells);
+//			System.out.println("--");
 		}
 		
 		// Contador de Tempo (Comentado)
-//		long endTime   = System.nanoTime();
-//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+		long endTime   = System.nanoTime();
+		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
 
 	private static int[] automata2(int n, int m, int d, int k, int[] cells) {
+		if (k > m)
+			do {
+				k = k / (m+1);
+			} while (k > 10);
+		
 		for (int i = 0; i < k; i++) {
 			int[] aux = new int[n];
 			int sum = sum1(0, d, n, cells);
@@ -89,6 +96,8 @@ public class Main {
 				sum += cell(j+d, n, cells);
 				aux[j] = sum % m;
 			}
+//			System.out.print(i + " - ");
+//			print(cells);
 			cells = aux;
 		}
 		return cells;
