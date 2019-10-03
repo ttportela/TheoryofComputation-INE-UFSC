@@ -21,6 +21,7 @@
 package br.com.tarlis.trabalho01;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
@@ -45,13 +46,16 @@ public class Main {
 	 * @throws NumberFormatException Erro na entrada de N1 ou N2.
 	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		
 //		byte[] buffer = new byte[System.in.available()+1];
 //		System.in.read(buffer);
+////		if (!System.lineSeparator().equals(buffer[buffer.length-2]))
 //		buffer[buffer.length-1] = '\n';
+//		
+//		// Ferramentas de leitura da entrada:
+//		InputStreamReader ir = new InputStreamReader(new ByteArrayInputStream(buffer));
+//        BufferedReader in = new BufferedReader(ir);
 		
 		// Ferramentas de leitura da entrada:
-//		InputStreamReader ir = new InputStreamReader(new ByteArrayInputStream(buffer));
 		InputStreamReader ir = new InputStreamReader(System.in);
         BufferedReader in = new BufferedReader(ir);
 		
@@ -59,7 +63,7 @@ public class Main {
 		String input;
 		
 		// Contador de Tempo (Comentado)
-//		long startTime = System.nanoTime();
+		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
@@ -68,32 +72,38 @@ public class Main {
 			int[] cells = split(in.readLine());
 			
 			// Impressão do resultado:
-			cells = automata2(VAR[0], VAR[1], VAR[2], VAR[3], cells);
+//			print(cells);
+			cells = automata3(VAR[0], VAR[1], VAR[2], VAR[3], cells);
 			print(cells);
 //			System.out.println("-- n="+VAR[0]+", m="+VAR[1]+", d="+VAR[2]+", k="+VAR[3]+" -- ");
 //			System.out.println("------------------------------------------------ ");
 		}
 		
 		// Contador de Tempo (Comentado)
-//		long endTime   = System.nanoTime();
-//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+		long endTime   = System.nanoTime();
+		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
 
 	private static int[] automata3(int n, int m, int d, int k, int[] cells) {
-
-		int cicle = -1;
-		
-		int[] aux = newState(n, m, d, cells);
+		int[] gen0 = cells = newState(n, m, d, cells);
+//		System.out.print(0 + ": ");
+//		print(cells);
 		for (int i = 1; i < k; i++) {
-			aux = newState(n, m, d, aux);
+			int[] aux = newState(n, m, d, cells);
 			
-			if (Arrays.equals(cells, aux)) 
-				return automata2(n,m,d,(k % i)-1, cells);			
+//			System.out.print(i + ": ");
+//			print(aux);
 			
+			if (Arrays.equals(cells, aux)) return aux;
+			
+			if (Arrays.equals(gen0, aux))
+				k = i + (k % i);		
+			
+			cells = aux;
 		}
-		return aux;
+		return cells;
 	}
 	
 	private static int[] automata2(int n, int m, int d, int k, int[] cells) {
@@ -144,11 +154,11 @@ public class Main {
 	private static int sum1(int i, int d, int n, int[] cells) {
 		int sum = 0;
 		for (int j = i-d; j <= i+d; j++) {
-			int k = j < 0? n + j : (j >= n? j-n : j);
-			if (distance(i,k,n) <= d) {
-				sum += cells[k];
-			}
-//			sum += cell(j, n, cells);
+//			int k = j < 0? n + j : (j >= n? j-n : j);
+//			if (distance(i,k,n) <= d) {
+//				sum += cells[k];
+//			}
+			sum += cell(j, n, cells);
 		}
 		return sum;
 	}
