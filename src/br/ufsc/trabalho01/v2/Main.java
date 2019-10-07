@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package br.com.tarlis.trabalho01.v1;
+package br.ufsc.trabalho01.v2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +25,6 @@ import java.io.InputStreamReader;
 
 /**
  * Problema - 3704 - Cellular Automaton | ICPC Live Archive
- * Intersecção de Linguagens (Comparação de concatenações sucessivas) 
  * 
  * Disciplina: Teoria da Computação - Atividade 01
  * Professor: Maicon Rafael Zatelli
@@ -37,13 +36,6 @@ import java.io.InputStreamReader;
  */
 public class Main {
 
-	/**
-	 * Método principal, faz a leitura da entrada e chama o método da solução.
-	 * 
-	 * @param args Nenhum requerido.
-	 * @throws IOException Erro de entrada.
-	 * @throws NumberFormatException Erro na entrada de N1 ou N2.
-	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
 		// Ferramentas de leitura da entrada:
@@ -54,7 +46,7 @@ public class Main {
 		String input;
 		
 		// Contador de Tempo (Comentado)
-//		long startTime = System.nanoTime();
+//				long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
@@ -68,34 +60,42 @@ public class Main {
 		}
 		
 		// Contador de Tempo (Comentado)
-//		long endTime   = System.nanoTime();
-//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+//				long endTime   = System.nanoTime();
+//				System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
-
+	
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
 		for (int i = 0; i < k; i++) {
-			int[] aux = new int[n];
-			for (int j = 0; j < n; j++) {
-				aux[j] = sum(j, d, n, cells) % m;
-			}
-			cells = aux;
+			cells = newState(n, m, d, cells);
 		}
 		return cells;
-	}
-
-	private static int sum(int i, int d, int n, int[] cells) {
-		int sum = 0;
-		for (int j = i-d; j <= i+d; j++) {
-			sum += cell(j, n, cells);
-		}
-		return sum;
 	}
 
 	private static int cell(int j, int n, int[] cells) {
 		int k = j < 0? n + j : (j >= n? j-n : j);
 		return cells[k];
+	}
+
+	private static int[] newState(int n, int m, int d, int[] cells) {
+		int[] aux = new int[n];
+		int sum = sum1(0, d, n, cells);
+		aux[0] = sum % m;
+		for (int j = 1; j < n; j++) {
+			sum -= cell(j-1-d, n, cells);
+			sum += cell(j+d, n, cells);
+			aux[j] = sum % m;
+		}
+		return aux;
+	}
+	
+	private static int sum1(int i, int d, int n, int[] cells) {
+		int sum = 0;
+		for (int j = i-d; j <= i+d; j++) {
+			sum += cell(j, n, cells);
+		}
+		return sum;
 	}
 
 	private static void print(int[] cells) {

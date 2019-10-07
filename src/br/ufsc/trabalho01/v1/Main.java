@@ -17,16 +17,14 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package br.com.tarlis.trabalho01.v3;
+package br.ufsc.trabalho01.v1;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 /**
  * Problema - 3704 - Cellular Automaton | ICPC Live Archive
- * Intersecção de Linguagens (Comparação de concatenações sucessivas) 
  * 
  * Disciplina: Teoria da Computação - Atividade 01
  * Professor: Maicon Rafael Zatelli
@@ -37,7 +35,14 @@ import java.util.Arrays;
  *
  */
 public class Main {
-	
+
+	/**
+	 * Método principal, faz a leitura da entrada e chama o método da solução.
+	 * 
+	 * @param args Nenhum requerido.
+	 * @throws IOException Erro de entrada.
+	 * @throws NumberFormatException Erro na entrada de N1 ou N2.
+	 */
 	public static void main(String[] args) throws NumberFormatException, IOException {
 
 		// Ferramentas de leitura da entrada:
@@ -69,41 +74,16 @@ public class Main {
 	}
 
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
-		int[] gen0 = cells = newState(n, m, d, cells);
-		for (int i = 1; i < k; i++) {
-			int[] aux = newState(n, m, d, cells);
-			
-			if (Arrays.equals(cells, aux)) {
-				return aux;
+		for (int i = 0; i < k; i++) {
+			int[] aux = new int[n];
+			for (int j = 0; j < n; j++) {
+				aux[j] = sum(j, d, n, cells) % m;
 			}
-			
-			if (Arrays.equals(gen0, aux)) {
-				if ((k % i) == 0) return cells;
-				k = i + (k % i);
-			}
-			
 			cells = aux;
 		}
 		return cells;
 	}
-	
-	private static int cell(int j, int n, int[] cells) {
-		int k = j < 0? n + j : (j >= n? j-n : j);
-		return cells[k];
-	}
 
-	private static int[] newState(int n, int m, int d, int[] cells) {
-		int[] aux = new int[n];
-		int sum = sum(0, d, n, cells);
-		aux[0] = sum % m;
-		for (int j = 1; j < n; j++) {
-			sum -= cell(j-1-d, n, cells);
-			sum += cell(j+d, n, cells);
-			aux[j] = sum % m;
-		}
-		return aux;
-	}
-	
 	private static int sum(int i, int d, int n, int[] cells) {
 		int sum = 0;
 		for (int j = i-d; j <= i+d; j++) {
@@ -111,7 +91,12 @@ public class Main {
 		}
 		return sum;
 	}
-	
+
+	private static int cell(int j, int n, int[] cells) {
+		int k = j < 0? n + j : (j >= n? j-n : j);
+		return cells[k];
+	}
+
 	private static void print(int[] cells) {
 		String s = "";
 		for (int i : cells) {
