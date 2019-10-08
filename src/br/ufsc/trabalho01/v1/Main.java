@@ -53,7 +53,7 @@ public class Main {
 		String input;
 		
 		// Contador de Tempo (Comentado)
-//		long startTime = System.nanoTime();
+		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
@@ -67,18 +67,27 @@ public class Main {
 		}
 		
 		// Contador de Tempo (Comentado)
-//		long endTime   = System.nanoTime();
-//		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+		long endTime   = System.nanoTime();
+		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
 		
 		return;
 	}
 
+	/**
+	 * Solução A.
+	 * 
+	 */
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
+		// Para cada passo k:
 		for (int i = 0; i < k; i++) {
+			// Cria um vetor auxiliar:
 			int[] aux = new int[n];
+			// Para cada elemento, soma dos valores
+			// das células vizinhas e calcula o módulo
 			for (int j = 0; j < n; j++) {
 				aux[j] = sum(j, d, n, cells) % m;
 			}
+			// Atualiza o resultado:
 			cells = aux;
 		}
 		return cells;
@@ -86,6 +95,9 @@ public class Main {
 
 	private static int sum(int i, int d, int n, int[] cells) {
 		int sum = 0;
+		// Calcula a soma dos valores
+		// das células vizinhas de distância
+		// -d até +d:
 		for (int j = i-d; j <= i+d; j++) {
 			sum += cell(j, n, cells);
 		}
@@ -93,8 +105,10 @@ public class Main {
 	}
 
 	private static int cell(int j, int n, int[] cells) {
-		int k = j < 0? n + j : (j >= n? j-n : j);
-		return cells[k];
+		// Transcreve j como um índice do vetor
+		// (simula um vetor circular)
+		j = j < 0? n + j : (j >= n? j-n : j);
+		return cells[j];
 	}
 
 	private static void print(int[] cells) {
@@ -108,11 +122,10 @@ public class Main {
 	private static int[] split(String input, int n) {
 		String[] s = input.trim().split(" ");
 		int[] cells = new int[n];
-		for (int i = 0; i < cells.length; i++) {
+		for (int i = 0; i < Math.min(s.length, n); i++) {
 			cells[i] = Integer.parseInt(s[i]);
 		}
 		return cells;
 	}
-	
 		
 }

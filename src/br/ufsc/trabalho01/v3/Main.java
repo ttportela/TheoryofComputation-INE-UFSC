@@ -67,17 +67,31 @@ public class Main {
 		return;
 	}
 
+	/**
+	 * Solução C.
+	 * 
+	 */
 	private static int[] automata(int n, int m, int d, int k, int[] cells) {
+		// Calcula o primeiro estado
 		int[] gen0 = cells = newState(n, m, d, cells);
+		// Para cada passo k (menos 1):
 		for (int i = 1; i < k; i++) {
+			// Calcula o novo estado:
 			int[] aux = newState(n, m, d, cells);
 			
+			// Verifica se os valores das células dos últimos 2 
+			// estados são iguais, entao retorna (não muda)
 			if (Arrays.equals(cells, aux)) {
 				return aux;
 			}
 			
+			// Verifica se os valores das células são iguais
+			// aos do primeiro passo, então há um ciclo: 
 			if (Arrays.equals(gen0, aux)) {
+				// O resultado é o estado anterior, retorna:
 				if ((k % i) == 0) return cells;
+				// altera o valor de k para calcular apenas até o valor 
+				// esperado da resposta: 
 				k = i + (k % i);
 			}
 			
@@ -85,28 +99,37 @@ public class Main {
 		}
 		return cells;
 	}
-	
-	private static int cell(int j, int n, int[] cells) {
-		int k = j < 0? n + j : (j >= n? j-n : j);
-		return cells[k];
-	}
 
 	private static int[] newState(int n, int m, int d, int[] cells) {
 		int[] aux = new int[n];
+		// Faz apenas a soma da vizinhança do primeiro elemento,
 		int sum = sum(0, d, n, cells);
 		aux[0] = sum % m;
+		// Calcula o novo valor de cada célula
+		// do vetor, porém a soma dos demais elementos é
+		// Calculada sobre a soma do primeiro, evitando retrabalho.
 		for (int j = 1; j < n; j++) {
-			sum -= cell(j-1-d, n, cells);
-			sum += cell(j+d, n, cells);
+			sum -= cells[index(j-1-d, n)];
+			sum += cells[index(j+d, n)];
 			aux[j] = sum % m;
 		}
 		return aux;
 	}
+
+	// Com a função index, evita-se a cópia repetitiva do vetor
+	// em emória, basta sabermos o índice do elemento procurado:
+	private static int index(int j, int n) {
+		// Encontra o índice respectivo de j no vetor "circular"
+		return j < 0? n + j : (j >= n? j-n : j);
+	}
 	
 	private static int sum(int i, int d, int n, int[] cells) {
 		int sum = 0;
+		// Calcula a soma dos valores
+		// das células vizinhas de distância
+		// -d até +d:
 		for (int j = i-d; j <= i+d; j++) {
-			sum += cell(j, n, cells);
+			sum += cells[index(j, n)];
 		}
 		return sum;
 	}
@@ -122,7 +145,7 @@ public class Main {
 	private static int[] split(String input, int n) {
 		String[] s = input.trim().split(" ");
 		int[] cells = new int[n];
-		for (int i = 0; i < cells.length; i++) {
+		for (int i = 0; i < Math.min(s.length, n); i++) {
 			cells[i] = Integer.parseInt(s[i]);
 		}
 		return cells;

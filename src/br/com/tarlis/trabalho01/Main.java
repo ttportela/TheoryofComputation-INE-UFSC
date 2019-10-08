@@ -597,7 +597,7 @@ public class Main {
 	private static int[] split(String input, int n) {
 		String[] s = input.trim().split(" ");
 		int[] cells = new int[n];
-		for (int i = 0; i < cells.length; i++) {
+		for (int i = 0; i < Math.min(s.length, n); i++) {
 			cells[i] = Integer.parseInt(s[i]);
 		}
 		return cells;
