@@ -1,4 +1,4 @@
-package br.com.tarlis.trabalho01.vx;
+package br.com.tarlis.trabalho01.vcpp;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package br.ufsc.trabalho01.v3;
+package br.ufsc.trabalho01.v4;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -52,11 +52,11 @@ public class Main {
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
 			// n, m, d, k (1 ≤ n ≤ 500, 1 ≤ m ≤ 1.000.000, 0 ≤ d < n/2, 1 ≤ k ≤ 10.000.000)
-			int[] VAR = split(input, 4); 
-			int[] cells = split(in.readLine(), VAR[0]);
+			long[] VAR = split(input, 4); 
+			long[] cells = split(in.readLine(), (int) VAR[0]);
 			
 			// Impressão do resultado:
-			cells = automata(VAR[0], VAR[1], VAR[2], VAR[3], cells);
+			cells = automata((int) VAR[0], VAR[1], (int) VAR[2], VAR[3], cells);
 			print(cells);
 		}
 		
@@ -71,13 +71,13 @@ public class Main {
 	 * Solução C.
 	 * 
 	 */
-	private static int[] automata(int n, int m, int d, int k, int[] cells) {
+	private static long[] automata(int n, long m, int d, long k, long[] cells) {
 		// Calcula o primeiro estado
-		int[] gen0 = cells = newState(n, m, d, cells);
+		long[] gen0 = cells = newState(n, m, d, cells);
 		// Para cada passo k (menos 1):
-		for (int i = 1; i < k; i++) {
+		for (long i = 1; i < k; i++) {
 			// Calcula o novo estado:
-			int[] aux = newState(n, m, d, cells);
+			long[] aux = newState(n, m, d, cells);
 			
 			// Verifica se os valores das células dos últimos 2 
 			// estados são iguais, entao retorna (não muda)
@@ -100,10 +100,10 @@ public class Main {
 		return cells;
 	}
 
-	private static int[] newState(int n, int m, int d, int[] cells) {
-		int[] aux = new int[n];
+	private static long[] newState(int n, long m, int d, long[] cells) {
+		long[] aux = new long[n];
 		// Faz apenas a soma da vizinhança do primeiro elemento,
-		int sum = (n == d*2)? sumall(n, cells) : sum(0, d, n, cells);
+		long sum = (n == d*2)? sumall(n, cells) : sum(0, d, n, cells);
 		aux[0] = sum % m;
 		// Calcula o novo valor de cada célula
 		// do vetor, porém a soma dos demais elementos é
@@ -118,45 +118,45 @@ public class Main {
 		return aux;
 	}
 
+	private static long sumall(int n, long[] cells) {
+		long sum = 0;
+		for (int j = 0; j < n; j++) {
+			sum += cells[j];
+		}
+		return sum;
+	}
+
 	// Com a função index, evita-se a cópia repetitiva do vetor
 	// em emória, basta sabermos o índice do elemento procurado:
 	private static int index(int j, int n) {
 		// Encontra o índice respectivo de j no vetor "circular"
 		return j < 0? n + j : (j >= n? j-n : j);
 	}
-
-	private static int sumall(int n, int[] cells) {
-		// Calcula a soma dos valores
-		// das células vizinhas (para d = n/2)
-		int sum = 0;
-		for (int j = 0; j < n; j++) {
-			sum += cells[j];
-		}
-		return sum;
-	}
 	
-	private static int sum(int i, int d, int n, int[] cells) {
-		int sum = 0;
+	private static long sum(int i, int d, int n, long[] cells) {
+		long sum = 0;
 		// Calcula a soma dos valores
 		// das células vizinhas de distância
 		// -d até +d:
 		for (int j = i-d; j <= i+d; j++) {
-			sum += cells[index(j, n)];
+//		for (int j = 0; j < n; j++) {
+//			if (Math.min(Math.abs(i - j), (n-1) - Math.abs(i - j)) <= d)
+				sum += cells[index(j, n)];
 		}
 		return sum;
 	}
 	
-	private static void print(int[] cells) {
+	private static void print(long[] cells) {
 		String s = "";
-		for (int i : cells) {
+		for (long i : cells) {
 			s += i + " ";
 		}
 		System.out.println(s.trim());
 	}
 
-	private static int[] split(String input, int n) {
+	private static long[] split(String input, int n) {
 		String[] s = input.trim().split(" ");
-		int[] cells = new int[n];
+		long[] cells = new long[n];
 		for (int i = 0; i < Math.min(s.length, n); i++) {
 			cells[i] = Integer.parseInt(s[i]);
 		}
