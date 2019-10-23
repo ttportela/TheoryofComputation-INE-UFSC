@@ -26,7 +26,7 @@ import java.util.*;
 /**
  * Problema - 264 - Count on Cantor | UVA Online Judge
  * 
- * Disciplina: Teoria da Computação - Atividade 01
+ * Disciplina: Teoria da Computação - Atividade 03
  * Professor: Maicon Rafael Zatelli
  * 
  * @author Tarlis Tortelli Portela
@@ -34,7 +34,8 @@ import java.util.*;
  */
 class Main {
 	
-	static String ReadLn (int maxLg)  // utility function to read from stdin
+	// Função utilitária para leitura do teclado, conforme modelo em UVa
+	static String ReadLn (int maxLg) 
     {
         byte lin[] = new byte [maxLg];
         int lg = 0, car = -1;
@@ -69,17 +70,26 @@ class Main {
         String input;
         int x;
 
+        // Laço de repetição para leitura de cada linha da entrada:
         while ((input = Main.ReadLn (255)) != null)
         {
+          // Converte a entrada em um número e chama a função para
+          // buscar e imprimir a resposta.
           x = Integer.parseInt (input);
           cantor(x);
         }
     }
 	
 	void cantor(int x) {
-		int term = 1; boolean invert = true;
+		// Contador do termo equivalente no conjunto N
+		int term = 1; 
+		// Flag auxiliar (inversão dos contadores)
+		boolean invert = true;
+		// Repetir no máximo até o termo desejado (x):
 		for (int n = term; n <= x; n++) {
+			// Dois contadores: numerador e denominador
 			for (int i = 1, j = n; i <= n; i++, j--) {
+				// Imprime quando chega no termo pesquisado:
 				if (term == x) {
 					if (invert)
 						System.out.println("TERM " + term + " IS " + j + "/" + i);
@@ -87,8 +97,10 @@ class Main {
 						System.out.println("TERM " + term + " IS " + i + "/" + j);
 					return;
 				}
-				term++;
+				term++; // incremento do termo
 			}
+			// A cada incremento de n modifica a flag para inverter o 
+			// numerador e denominador na impressão da fração
 			invert = !invert;
 		}
 	}

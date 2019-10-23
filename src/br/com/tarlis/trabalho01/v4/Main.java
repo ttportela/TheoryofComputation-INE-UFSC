@@ -1,7 +1,7 @@
 /**
  * Problema - 3704 - Cellular Automaton | ICPC Live Archive
  * 
- * Disciplina: Teoria da Computação - Atividade 02
+ * Disciplina: Teoria da Computação - Trabalho 01
  * Professor: Maicon Rafael Zatelli
  * 
  *  This program is free software: you can redistribute it and/or modify
@@ -22,158 +22,146 @@ package br.com.tarlis.trabalho01.v4;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
+/**
+ * Problema - 3704 - Cellular Automaton | ICPC Live Archive 
+ * 
+ * Disciplina: Teoria da Computação - Atividade 01
+ * Professor: Maicon Rafael Zatelli
+ * 
+ * @author Tarlis Tortelli Portela
+ * @author Vanessa Lago Machado
+ * @author Rômulo Almeida
+ *
+ */
 public class Main {
-
-	/**
-	 * Problema - 3704 - Cellular Automaton | ICPC Live Archive
-	 * Intersecção de Linguagens (Comparação de concatenações sucessivas) 
-	 * 
-	 * Disciplina: Teoria da Computação - Atividade 01
-	 * Professor: Maicon Rafael Zatelli
-	 * 
-	 * @author Tarlis Tortelli Portela
-	 * @author Vanessa Lago Machado
-	 * @author Rômulo Almeida
-	 *
-	 */
+	
 	public static void main(String[] args) throws NumberFormatException, IOException {
-		
-//		// Ferramentas de leitura da entrada:
+
+		// Ferramentas de leitura da entrada:
 		InputStreamReader ir = new InputStreamReader(System.in);
         BufferedReader in = new BufferedReader(ir);
 		
         // Variáveis úteis:
 		String input;
+		
+		// Contador de Tempo (Comentado)
+		long startTime = System.nanoTime();
 
 		// Enquanto houver entrada:
 		while (in.ready() && (input = in.readLine()) != null) {
-			int[] VAR = split(input, 4); 
-			int[] cells = split(in.readLine(), VAR[0]);
+			// n, m, d, k (1 ≤ n ≤ 500, 1 ≤ m ≤ 1.000.000, 0 ≤ d < n/2, 1 ≤ k ≤ 10.000.000)
+			long[] VAR = split(input, 4); 
+			long[] cells = split(in.readLine(), (int) VAR[0]);
 			
 			// Impressão do resultado:
-			cells = automata(VAR[0], VAR[1], VAR[2], VAR[3], cells);
+			cells = automata((int) VAR[0], VAR[1], (int) VAR[2], VAR[3], cells);
 			print(cells);
 		}
 		
+		// Contador de Tempo (Comentado)
+		long endTime   = System.nanoTime();
+		System.out.println("Total Time: " + ((endTime - startTime)*Math.pow(10, -9)));
+		
 		return;
 	}
-	
-	private static int[] automata(int n, int m, int d, int k, int[] prev) {
-		int OLD = 0, SUM = 1, NEW = 2, NEX = 3;
-		int[][] tape = new int[4][n];
-		tape[OLD] = prev;
-		tape[SUM][0] = sum(0, d, n, tape[OLD]);
-		tape[NEX][0] = tape[SUM][0] % m;
 
-		// Apenas para os primeiros:
-		for (int i = -d; i <= d; i++) {
-			tape[NEW][index(i, n)] += tape[SUM][0] % m;
-		}
-		System.out.println("0-");
-		System.out.print("| OLD -- ");print(tape[OLD]);System.out.print("| NEX -- "); print(tape[NEX]); System.out.print("| SUO -- ");print(tape[SUM]); System.out.print("| SUN -- ");print(tape[NEW]);
-		
-		// Passo 1: Todas as somas da geração 0:
-		int j = 1;
-		int sum = tape[SUM][0];
-		// Passo 1.1):
-		for (; j < d+1; j++) {
-			int x = j % n;
+	/**
+	 * Solução C.
+	 * 
+	 */
+	private static long[] automata(int n, long m, int d, long k, long[] cells) {
+		// Calcula o primeiro estado
+		long[] gen0 = cells = newState(n, m, d, cells);
+		// Para cada passo k (menos 1):
+		for (long i = 1; i < k; i++) {
+			// Calcula o novo estado:
+			long[] aux = newState(n, m, d, cells);
 			
-			tape[SUM][x] = sum = sum - tape[OLD][index(x-1-d, n)] + tape[OLD][index(x+d, n)];
-			
-			System.out.println(j + ": ");
-			System.out.print("| OLD -- ");print(tape[OLD]);System.out.print("| NEX -- "); print(tape[NEX]); System.out.print("| SUO -- ");print(tape[SUM]); System.out.print("| SUN -- ");print(tape[NEW]);
-			System.out.println("| --- -- x=" + x + " - y=" + '?' + " - z=" + '?');
-		}
-		// Passo 1.2):
-		for (; j < n; j++) {
-			int x = j % n, y = index(x-1-d, n);
-			
-			tape[SUM][x] = sum = sum - tape[OLD][index(x-1-d, n)] + tape[OLD][index(x+d, n)];
-			// Calcular próximos valores:
-			tape[NEX][y] = tape[SUM][y] % m;
-			
-			System.out.println(j + ": ");
-			System.out.print("| OLD -- ");print(tape[OLD]);System.out.print("| NEX -- "); print(tape[NEX]); System.out.print("| SUO -- ");print(tape[SUM]); System.out.print("| SUN -- ");print(tape[NEW]);
-			System.out.println("| --- -- x=" + x + " - y=" + y + " - z=" + '?');
-		}
-		
-		// Passo 2: 
-		// A - Todas as somas da geração 1->n:
-		// B - Todos os resultados da geração 0->n-1;
-		for (; j < k*n+n; j++) {
-			int x = j % n, y = index(x-1-d, n), z = index(x-(n/2), n);
-			
-			// A:
-			tape[SUM][x] = sum = sum - tape[OLD][index(x-1-d, n)] + tape[OLD][index(x+d, n)];
-			// Calcular próximos valores:
-			tape[NEX][y] = tape[SUM][y] % m;
-			
-			// B:
-			tape[OLD][z] = tape[NEX][z];
-			
-			System.out.println(j + ":: ");
-			System.out.print("| OLD -- ");print(tape[OLD]);System.out.print("| NEX -- "); print(tape[NEX]); System.out.print("| SUO -- ");print(tape[SUM]); System.out.print("| SUN -- ");print(tape[NEW]);
-			System.out.println("| --- -- x=" + x + " - y=" + y + " - z=" + z);
-			
-			if (y == (n-1)) {
-				System.out.print("e -- ");
-				print(tape[NEX]);
+			// Verifica se os valores das células dos últimos 2 
+			// estados são iguais, entao retorna (não muda)
+			if (Arrays.equals(cells, aux)) {
+				return aux;
 			}
+			
+			// Verifica se os valores das células são iguais
+			// aos do primeiro passo, então há um ciclo: 
+			if (Arrays.equals(gen0, aux)) {
+				// O resultado é o estado anterior, retorna:
+				if ((k % i) == 0) return cells;
+				// altera o valor de k para calcular apenas até o valor 
+				// esperado da resposta: 
+				k = i + (k % i);
+			}
+			
+			cells = aux;
 		}
-		
-		return tape[NEX];//answer(n, d, m, tape);
-	}
-	
-	private static int[] answer(int n, int d, int m, int[][] next) {
-		int[] cells = new int[n];
-		
-		int i = 0;
-		for (; i < n-d-2; i++) {
-			cells[i] = next[0][i];
-		}
-		
-		for (; i < n; i++) {
-//			cells[i] = next[1][i] % m;
-			cells[i] = next[3][i];
-		}
-		
 		return cells;
 	}
 
-	private static int index(int j, int n) {
-		return j < 0? n + j : (j >= n? j-n : j);
+	private static long[] newState(int n, long m, int d, long[] cells) {
+		long[] aux = new long[n];
+		// Faz apenas a soma da vizinhança do primeiro elemento,
+		long sum = (n == d*2)? sumall(n, cells) : sum(0, d, n, cells);
+		aux[0] = sum % m;
+		// Calcula o novo valor de cada célula
+		// do vetor, porém a soma dos demais elementos é
+		// Calculada sobre a soma do primeiro, evitando retrabalho.
+		for (int j = 1; j < n; j++) {
+			if (n > d*2) {
+				sum -= cells[index(j-1-d, n)];
+				sum += cells[index(j+d, n)];
+			}
+			aux[j] = sum % m;
+		}
+		return aux;
 	}
-	
-	private static int sum(int i, int d, int n, int[] cells) {
-		int sum = 0;
-		for (int j = i-d; j <= i+d; j++) {
-			sum += cell(j, n, cells);
+
+	private static long sumall(int n, long[] cells) {
+		long sum = 0;
+		for (int j = 0; j < n; j++) {
+			sum += cells[j];
 		}
 		return sum;
 	}
 
-	private static int cell(int j, int n, int[] cells) {
-//		int k = j < 0? n + j : (j >= n? j-n : j);
-		return cells[index(j, n)];
+	// Com a função index, evita-se a cópia repetitiva do vetor
+	// em emória, basta sabermos o índice do elemento procurado:
+	private static int index(int j, int n) {
+		// Encontra o índice respectivo de j no vetor "circular"
+		return j < 0? n + j : (j >= n? j-n : j);
 	}
-
-	private static void print(int[] cells) {
+	
+	private static long sum(int i, int d, int n, long[] cells) {
+		long sum = 0;
+		// Calcula a soma dos valores
+		// das células vizinhas de distância
+		// -d até +d:
+		for (int j = i-d; j <= i+d; j++) {
+//		for (int j = 0; j < n; j++) {
+//			if (Math.min(Math.abs(i - j), (n-1) - Math.abs(i - j)) <= d)
+				sum += cells[index(j, n)];
+		}
+		return sum;
+	}
+	
+	private static void print(long[] cells) {
 		String s = "";
-		for (int i : cells) {
+		for (long i : cells) {
 			s += i + " ";
 		}
 		System.out.println(s.trim());
 	}
 
-	private static int[] split(String input, int n) {
+	private static long[] split(String input, int n) {
 		String[] s = input.trim().split(" ");
-		int[] cells = new int[n];
+		long[] cells = new long[n];
 		for (int i = 0; i < Math.min(s.length, n); i++) {
 			cells[i] = Integer.parseInt(s[i]);
 		}
 		return cells;
 	}
-			
+	
+		
 }

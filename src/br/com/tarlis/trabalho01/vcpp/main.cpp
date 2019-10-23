@@ -1,3 +1,22 @@
+/*
+ * Problema - 3704 - Cellular Automaton | ICPC Live Archive
+ *
+ * Disciplina: Teoria da Computação - Trabalho 01
+ * Professor: Maicon Rafael Zatelli
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ */
 #include<bits/stdc++.h>
 
 using namespace std;
@@ -15,7 +34,7 @@ LL equals(LL* a, LL* b) {
 }
 
 // Com a função index, evita-se a cópia repetitiva do vetor
-// em emória, basta sabermos o índice do elemento procurado:
+// em memória, basta sabermos o índice do elemento procurado:
 LL index(LL j) {
 	// Encontra o índice respectivo de j no vetor "circular"
 	return j < 0? n + j : (j >= n? j-n : j);
@@ -32,7 +51,7 @@ LL add(LL i, LL d) {
 	return sum;
 }
 
-LL addall(LL n) {
+LL addall() {
 	LL sum = 0;
 	for (LL j = 0; j < n; j++) {
 		sum += cells[j];
@@ -43,7 +62,7 @@ LL addall(LL n) {
 LL * newState(LL d) {
 	LL * aux = new LL[n];
 	// Faz apenas a soma da vizinhança do primeiro elemento,
-	LL sum = (n > d*2)? add(0, d) : addall(n);
+	LL sum = (n > d*2)? add(0, d) : addall();
 	aux[0] = sum % m;
 	// Calcula o novo valor de cada célula
 	// do vetor, porém a soma dos demais elementos é
@@ -90,7 +109,7 @@ void automata(LL d, LL k) {
 int main()
 {
 	LL d, k;
-	while(~scanf("%d%d%lld%lld", &n, &m, &d, &k))
+	while(~scanf("%lld%lld%lld%lld", &n, &m, &d, &k))
 	{
 		cells = new LL[(LL)n];
 		for(LL i=0; i<n; ++i)

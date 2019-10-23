@@ -1,7 +1,7 @@
 /**
  * Problema - 3704 - Cellular Automaton | ICPC Live Archive
  * 
- * Disciplina: Teoria da Computação - Atividade 02
+ * Disciplina: Teoria da Computação - Trabalho 01
  * Professor: Maicon Rafael Zatelli
  * 
  *  This program is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package br.ufsc.trabalho01.v2;
+package br.com.tarlis.trabalho01.v2;
 
 import java.io.BufferedReader;
 import java.io.IOException;
