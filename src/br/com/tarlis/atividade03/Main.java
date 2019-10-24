@@ -30,6 +30,7 @@ import java.util.*;
  * Professor: Maicon Rafael Zatelli
  * 
  * @author Tarlis Tortelli Portela
+ * @author Vanessa Lago Machado
  *
  */
 class Main {
