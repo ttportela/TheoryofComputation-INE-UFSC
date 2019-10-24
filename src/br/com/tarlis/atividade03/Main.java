@@ -83,7 +83,6 @@ class Main {
 	void cantor(int x) {
 		// Contador do termo equivalente no conjunto N
 		int term = 1; 
-		
 		// Contador de n para subconjuntos de Q
 		for (int n = term; n <= x; n++) {
 			// Dois contadores: numerador e denominador
