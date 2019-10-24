@@ -83,15 +83,15 @@ class Main {
 	void cantor(int x) {
 		// Contador do termo equivalente no conjunto N
 		int term = 1; 
-		// Flag auxiliar (inversão dos contadores)
-		boolean invert = true;
-		// Repetir no máximo até o termo desejado (x):
+		
+		// Contador de n para subconjuntos de Q
 		for (int n = term; n <= x; n++) {
 			// Dois contadores: numerador e denominador
 			for (int i = 1, j = n; i <= n; i++, j--) {
 				// Imprime quando chega no termo pesquisado:
 				if (term == x) {
-					if (invert)
+					// Inverte a ordem de impressão para n ímpar
+					if (n % 2 != 0)
 						System.out.println("TERM " + term + " IS " + j + "/" + i);
 					else
 						System.out.println("TERM " + term + " IS " + i + "/" + j);
@@ -99,9 +99,6 @@ class Main {
 				}
 				term++; // incremento do termo
 			}
-			// A cada incremento de n modifica a flag para inverter o 
-			// numerador e denominador na impressão da fração
-			invert = !invert;
 		}
 	}
 }
