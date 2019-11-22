@@ -3,5 +3,7 @@ Class Activities. Theory of Computation, UFSC, INE. 2019
 
 Professor: Maicon Rafael Zatelli
 
-Activity 02: https://www.urionlinejudge.com.br/judge/pt/problems/view/1083
+Problem - 264 - Count on Cantor | UVA Online Judge
+
+Activity 03: https://uva.onlinejudge.org/index.php?option=onlinejudge&page=show_problem&problem=200
 
